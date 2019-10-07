@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
+import {View, Text} from 'react-native';
 import Menu from './MenuComponent';
 
 import {DISHES} from '../shared/dishes';
+import DishDetail from './DishDetailComponent';
 
 class Main extends Component {
   constructor(props) {
@@ -9,11 +11,31 @@ class Main extends Component {
 
     this.state = {
       dishes: DISHES,
+      selectedDish: null,
     };
   }
 
+  onDishSelect(dishId) {
+    this.setState({selectedDish: dishId});
+  }
+
   render() {
-    return <Menu dishes={this.state.dishes} />;
+    return (
+      <View style={{flex: 1}}>
+        <Text>Jajajja</Text>
+        <Menu
+          dishes={this.state.dishes}
+          onPress={dishId => this.onDishSelect(dishId)}
+        />
+        <DishDetail
+          dish={
+            this.state.dishes.filter(
+              dish => dish.id === this.state.selectedDish,
+            )[0]
+          }
+        />
+      </View>
+    );
   }
 }
 
