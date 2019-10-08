@@ -1,39 +1,40 @@
 import React, {Component} from 'react';
-import {View, Text} from 'react-native';
-import Menu from './MenuComponent';
+import {View, Text, Platform} from 'react-native';
+import {createAppContainer} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
 
+import Menu from './MenuComponent';
 import {DISHES} from '../shared/dishes';
 import DishDetail from './DishDetailComponent';
 
+const MenuNavigator = createStackNavigator(
+  {
+    Menu: {screen: Menu},
+    DishDetail: {screen: DishDetail},
+  },
+  {
+    initialRouteName: 'Menu',
+    navigationOptions: {
+      headerStyle: {
+        backgroundColor: '#512DA8',
+      },
+      headerTintColor: '#fff',
+      headerTitleColor: {
+        color: '#fff',
+      },
+    },
+  },
+);
+
 class Main extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      dishes: DISHES,
-      selectedDish: null,
-    };
-  }
-
-  onDishSelect(dishId) {
-    this.setState({selectedDish: dishId});
-  }
-
   render() {
     return (
-      <View style={{flex: 1}}>
-        <Text>Jajajja</Text>
-        <Menu
-          dishes={this.state.dishes}
-          onPress={dishId => this.onDishSelect(dishId)}
-        />
-        <DishDetail
-          dish={
-            this.state.dishes.filter(
-              dish => dish.id === this.state.selectedDish,
-            )[0]
-          }
-        />
+      <View
+        style={{
+          flex: 1,
+          paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constans.statusBarHeight,
+        }}>
+        <MenuNavigator />
       </View>
     );
   }
