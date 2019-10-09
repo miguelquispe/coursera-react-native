@@ -23,11 +23,11 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import Main from './components/MainComponent';
+import AppContainer from './components/MainComponent';
 
 class App extends React.Component {
   render() {
-    return <Main />;
+    return <AppContainer />;
   }
 }
 

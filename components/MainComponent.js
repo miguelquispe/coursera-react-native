@@ -67,18 +67,20 @@ const MainNavigator = createDrawerNavigator(
   },
 );
 
-class Main extends Component {
-  render() {
-    return (
-      <View
-        style={{
-          flex: 1,
-          paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constans.statusBarHeight,
-        }}>
-        <MainNavigator />
-      </View>
-    );
-  }
-}
+const AppContainer = createAppContainer(MainNavigator);
 
-export default Main;
+// class Main extends Component {
+//   render() {
+//     return (
+//       <View
+//         style={{
+//           flex: 1,
+//           paddingTop: Platform.OS === 'ios' ? 0 : 20,
+//         }}>
+//         <AppContainer />
+//       </View>
+//     );
+//   }
+// }
+
+export default AppContainer;
