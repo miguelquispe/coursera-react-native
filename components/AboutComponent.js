@@ -3,6 +3,7 @@ import {ScrollView, Text, FlatList} from 'react-native';
 import {Card, ListItem} from 'react-native-elements';
 import {connect} from 'react-redux';
 import {baseUrl} from '../shared/baseUrl';
+import {Loading} from './LoadingComponent';
 
 const mapStateToProps = state => {
   return {
@@ -50,27 +51,45 @@ class About extends Component {
       );
     };
 
-    return (
+    if (this.props.leaders.isLoading) {
+      return (
+        <ScrollView>
+          <History />
+          <Card title="Corporate Leadership">
+            <Loading />
+          </Card>
+        </ScrollView>
+      );
+    } else if (this.props.leaders.errMess) {
       <ScrollView>
         <History />
         <Card title="Corporate Leadership">
-          <FlatList
-            data={this.props.leaders.leaders}
-            renderItem={renderLeader}
-            keyExtractor={item => item.id.toString()}
-          />
-          {/* {leaders.map((item, index) => (
-            <ListItem
-              key={index}
-              title={item.name}
-              subtitle={item.description}
-              hideChevron={true}
-              leftAvatar={{source: {uri: baseUrl + item.image}}}
-            />
-          ))} */}
+          <Text>{this.props.leaders.errMess}</Text>
         </Card>
-      </ScrollView>
-    );
+      </ScrollView>;
+    } else {
+      return (
+        <ScrollView>
+          <History />
+          <Card title="Corporate Leadership">
+            <FlatList
+              data={this.props.leaders.leaders}
+              renderItem={renderLeader}
+              keyExtractor={item => item.id.toString()}
+            />
+            {/* {leaders.map((item, index) => (
+              <ListItem
+                key={index}
+                title={item.name}
+                subtitle={item.description}
+                hideChevron={true}
+                leftAvatar={{source: {uri: baseUrl + item.image}}}
+              />
+            ))} */}
+          </Card>
+        </ScrollView>
+      );
+    }
   }
 }
 
