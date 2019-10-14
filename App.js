@@ -7,27 +7,19 @@
  */
 
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+import {Provider} from 'react-redux';
+import {ConfigureStore} from './redux/configureStore';
+import Main from './components/MainComponent';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-import AppContainer from './components/MainComponent';
+const store = ConfigureStore();
 
 class App extends React.Component {
   render() {
-    return <AppContainer />;
+    return (
+      <Provider store={store}>
+        <Main />
+      </Provider>
+    );
   }
 }
 

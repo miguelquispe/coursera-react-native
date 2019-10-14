@@ -1,7 +1,14 @@
 import React, {Component} from 'react';
 import {ScrollView, Text, FlatList} from 'react-native';
 import {Card, ListItem} from 'react-native-elements';
-import {LEADERS} from '../shared/leaders';
+import {connect} from 'react-redux';
+import {baseUrl} from '../shared/baseUrl';
+
+const mapStateToProps = state => {
+  return {
+    leaders: state.leaders,
+  };
+};
 
 const History = () => (
   <Card title="Our History">
@@ -22,37 +29,49 @@ const History = () => (
 );
 
 class About extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      leaders: LEADERS,
-    };
-  }
-
   static navigationOptions = {
     title: 'About Us',
   };
 
   render() {
-    const {leaders} = this.state;
+    // const {leaders} = this.state;
+
+    const renderLeader = ({item, index}) => {
+      return (
+        <ListItem
+          roundAvatar
+          key={index}
+          title={item.name}
+          subtitle={item.description}
+          subtitleNumerOfLines={15}
+          hideChevron={true}
+          leftAvatar={{source: {uri: baseUrl + item.image}}}
+        />
+      );
+    };
 
     return (
       <ScrollView>
         <History />
         <Card title="Corporate Leadership">
-          {leaders.map((item, index) => (
+          <FlatList
+            data={this.props.leaders.leaders}
+            renderItem={renderLeader}
+            keyExtractor={item => item.id.toString()}
+          />
+          {/* {leaders.map((item, index) => (
             <ListItem
               key={index}
               title={item.name}
               subtitle={item.description}
               hideChevron={true}
-              leftAvatar={{source: require('./images/alberto.png')}}
+              leftAvatar={{source: {uri: baseUrl + item.image}}}
             />
-          ))}
+          ))} */}
         </Card>
       </ScrollView>
     );
   }
 }
 
-export default About;
+export default connect(mapStateToProps)(About);

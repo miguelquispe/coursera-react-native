@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {View, Text, ScrollView, StyleSheet, Image} from 'react-native';
 import {createAppContainer, SafeAreaView} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
@@ -13,6 +13,30 @@ import Menu from './MenuComponent';
 import DishDetail from './DishDetailComponent';
 import About from './AboutComponent';
 import Contact from './ContactComponent';
+
+import {connect} from 'react-redux';
+import {
+  fetchDishes,
+  fetchComments,
+  fetchPromos,
+  fetchLeaders,
+} from '../redux/ActionCreators';
+
+const mapStateToProps = state => {
+  return {
+    dishes: state.dishes,
+    comments: state.comments,
+    promotions: state.comments,
+    leaders: state.leaders,
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  fetchDishes: () => dispatch(fetchDishes()),
+  fetchComments: () => dispatch(fetchComments()),
+  fetchPromos: () => dispatch(fetchPromos()),
+  fetchLeaders: () => dispatch(fetchLeaders()),
+});
 
 const MenuNavigator = createStackNavigator(
   {
@@ -214,19 +238,26 @@ const MainNavigator = createDrawerNavigator(
 
 const AppContainer = createAppContainer(MainNavigator);
 
-// class Main extends Component {
-//   render() {
-//     return (
-//       <View
-//         style={{
-//           flex: 1,
-//           paddingTop: Platform.OS === 'ios' ? 0 : 20,
-//         }}>
-//         <AppContainer />
-//       </View>
-//     );
-//   }
-// }
+class Main extends Component {
+  componentDidMount() {
+    this.props.fetchDishes();
+    this.props.fetchComments();
+    this.props.fetchPromos();
+    this.props.fetchLeaders();
+  }
+
+  render() {
+    return (
+      <View
+        style={{
+          flex: 1,
+          paddingTop: Platform.OS === 'ios' ? 0 : 0,
+        }}>
+        <AppContainer />
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -252,4 +283,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AppContainer;
+// export default AppContainer;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Main);
