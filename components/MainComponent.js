@@ -47,6 +47,7 @@ const MenuNavigator = createStackNavigator(
         headerLeft: (
           <Icon
             name="bars"
+            type="font-awesome"
             size={24}
             color="white"
             onPress={() => navigation.toggleDrawer()}
@@ -78,6 +79,7 @@ const HomeNavigator = createStackNavigator(
         headerLeft: (
           <Icon
             name="bars"
+            type="font-awesome"
             size={24}
             color="white"
             onPress={() => navigation.toggleDrawer()}
@@ -107,6 +109,7 @@ const AboutNavigator = createStackNavigator(
         headerLeft: (
           <Icon
             name="bars"
+            type="font-awesome"
             size={24}
             color="white"
             onPress={() => navigation.toggleDrawer()}
@@ -136,6 +139,7 @@ const ContactNavigator = createStackNavigator(
         headerLeft: (
           <Icon
             name="bars"
+            type="font-awesome"
             size={24}
             color="white"
             onPress={() => navigation.toggleDrawer()}
@@ -165,6 +169,7 @@ const ReservationNavigator = createStackNavigator(
         headerLeft: (
           <Icon
             name="bars"
+            type="font-awesome"
             size={24}
             color="white"
             onPress={() => navigation.toggleDrawer()}
