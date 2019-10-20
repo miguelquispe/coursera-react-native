@@ -27,7 +27,7 @@ class Reservation extends Component {
   };
 
   toggleModal() {
-    this.state({showModal: !this.state.showModal});
+    this.setState({showModal: !this.state.showModal});
   }
 
   handleReservation() {
@@ -52,7 +52,7 @@ class Reservation extends Component {
             style={styles.formItem}
             selectedValue={this.state.guests}
             onValueChange={(itemValue, itemIndex) =>
-              this.setState({guest: itemValue})
+              this.setState({guests: itemValue})
             }>
             <Picker.Item label="1" value="1" />
             <Picker.Item label="2" value="2" />
@@ -67,7 +67,7 @@ class Reservation extends Component {
           <Switch
             style={styles.formItem}
             value={this.state.smoking}
-            onTintColor="#512DA8"
+            trackColor="#512DA8"
             onValueChange={value => this.setState({smoking: value})}
           />
         </View>
