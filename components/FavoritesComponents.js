@@ -46,7 +46,7 @@ class Favorites extends Component {
 
     const renderMenuItem = ({item, index}) => {
       return (
-        <Animatable.View animation="fadeInDown" duration={2000} delay={1000}>
+        <Animatable.View animation="fadeInRight" duration={2000} delay={1000}>
           <ListItem
             key={index}
             title={item.name}
