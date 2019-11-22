@@ -15,6 +15,7 @@ import About from './AboutComponent';
 import Contact from './ContactComponent';
 import Reservation from './ReservationComponent';
 import Favorites from './FavoritesComponents';
+import Login from './LoginComponent';
 
 import {connect} from 'react-redux';
 import {
@@ -60,6 +61,36 @@ const MenuNavigator = createStackNavigator(
   },
   {
     initialRouteName: 'Menu',
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: '#512DA8',
+      },
+      headerTintColor: '#fff',
+      headerTitleColor: {
+        color: '#fff',
+      },
+    },
+  },
+);
+
+const LoginNavigator = createStackNavigator(
+  {
+    Login: {
+      screen: Login,
+      navigationOptions: ({navigation}) => ({
+        headerLeft: (
+          <Icon
+            name="bars"
+            type="font-awesome"
+            size={24}
+            color="white"
+            onPress={() => navigation.toggleDrawer()}
+          />
+        ),
+      }),
+    },
+  },
+  {
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: '#512DA8',
@@ -245,6 +276,16 @@ const customDrawerContentComponent = props => (
 
 const MainNavigator = createDrawerNavigator(
   {
+    Login: {
+      screen: LoginNavigator,
+      navigationOptions: {
+        title: 'Login',
+        drawerLabel: 'Login',
+        drawerIcon: ({tinColor}) => (
+          <Icon name="sign-in" size={24} type="font-awesome" color={tinColor} />
+        ),
+      },
+    },
     Home: {
       screen: HomeNavigator,
       navigationOptions: {
@@ -317,6 +358,7 @@ const MainNavigator = createDrawerNavigator(
     },
   },
   {
+    initialRouteName: 'Home',
     drawerBackgroundColor: '#D1C4E9',
     contentComponent: customDrawerContentComponent,
   },
@@ -370,7 +412,4 @@ const styles = StyleSheet.create({
 });
 
 // export default AppContainer;
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
