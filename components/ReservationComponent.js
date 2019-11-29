@@ -8,12 +8,15 @@ import {
   Switch,
   Button,
   Modal,
+  Alert,
 } from 'react-native';
 import DatePicker from 'react-native-datepicker';
+import PushNotification from 'react-native-push-notification';
 
 class Reservation extends Component {
   constructor(props) {
     super(props);
+    this.configureNotification();
     this.state = {
       guests: 1,
       smoking: false,
@@ -26,12 +29,25 @@ class Reservation extends Component {
     title: 'Reserve Table',
   };
 
+  configureNotification() {
+    PushNotification.configure({
+      onNotification: function(notification) {
+        console.log('NOTIFICATION', notification);
+
+        // process the notification
+      },
+      popInitialNotification: true,
+      requestPermissions: true,
+    });
+  }
+
   toggleModal() {
     this.setState({showModal: !this.state.showModal});
   }
 
   handleReservation() {
     console.log(JSON.stringify(this.state));
+    this.presentLocalNotification(this.state.date);
     this.toggleModal();
   }
 
@@ -40,6 +56,14 @@ class Reservation extends Component {
       guests: 1,
       smoking: false,
       date: '',
+    });
+  }
+
+  presentLocalNotification(date) {
+    PushNotification.localNotification({
+      color: '#512DA8', // Android
+      title: 'Your reservation',
+      message: 'Reservation for ' + date + ' requested',
     });
   }
 
