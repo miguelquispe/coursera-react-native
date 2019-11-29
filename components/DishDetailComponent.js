@@ -6,6 +6,7 @@ import {
   ScrollView,
   Alert,
   PanResponder,
+  Share,
 } from 'react-native';
 import {Card, Icon} from 'react-native-elements';
 
@@ -77,6 +78,19 @@ const RenderDish = props => {
     },
   });
 
+  const shareDish = (title, message, url) => {
+    Share.share(
+      {
+        title: title,
+        message: title + ': ' + message + ' ' + url,
+        url: url,
+      },
+      {
+        dialogTitle: 'Share ' + title,
+      },
+    );
+  };
+
   if (dish != null) {
     return (
       <Animatable.View
@@ -95,6 +109,16 @@ const RenderDish = props => {
             color="#f50"
             onPress={() =>
               props.favorite ? console.log('Already favorite') : props.onPress()
+            }
+          />
+          <Icon
+            raised
+            reverse
+            name={'share'}
+            type="font-awesome"
+            color="#51D2A8"
+            onPress={() =>
+              shareDish(dish.name, dish.description, baseUrl + dish.image)
             }
           />
         </Card>
