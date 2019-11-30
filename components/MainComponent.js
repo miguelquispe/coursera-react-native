@@ -95,6 +95,7 @@ const LoginNavigator = createStackNavigator(
       headerStyle: {
         backgroundColor: '#512DA8',
       },
+      title: 'Login',
       headerTintColor: '#fff',
       headerTitleColor: {
         color: '#fff',
