@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, ScrollView, Image} from 'react-native';
+import {View, StyleSheet, Text, ScrollView, Image, Alert} from 'react-native';
 import {Icon, Input, CheckBox, Button} from 'react-native-elements';
-import {Permissions} from 'react-native-unimodules';
+import {Asset, Permissions} from 'react-native-unimodules';
 import * as SecureStore from 'expo-secure-store';
 import {createAppContainer} from 'react-navigation';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import {baseUrl} from '../shared/baseUrl';
 import * as ImagePicker from 'expo-image-picker';
+import * as ImageManipulator from 'expo-image-manipulator';
 
 // import *
 class LoginTab extends Component {
@@ -89,7 +90,12 @@ class LoginTab extends Component {
             onPress={() => this.handleLogin()}
             title="Login"
             icon={
-              <Icon name="sign-o" type="font-awesome" color="white" size={24} />
+              <Icon
+                name="sign-in"
+                type="font-awesome"
+                color="white"
+                size={24}
+              />
             }
             buttonColor={{backgroundColor: '#512DA8'}}
           />
@@ -144,8 +150,11 @@ class RegisterTab extends Component {
         aspect: [4, 3],
       });
 
+      Alert.alert(captureImage);
+
       if (!captureImage.cancelled) {
-        this.setState({imageUrl: captureImage.uri});
+        // this.setState({imageUrl: captureImage.uri});
+        this.processImage(captureImage.uri);
       }
     }
   };
@@ -162,6 +171,20 @@ class RegisterTab extends Component {
       ).catch(error => console.log('Could not save user info', error));
     }
   }
+
+  processImage = async imageUri => {
+    let processedImage = await ImageManipulator.manipulateAsync(
+      imageUri,
+      [
+        {
+          resize: {width: 400},
+        },
+      ],
+      {format: 'png'},
+    );
+
+    this.setState({imageUrl: processedImage.uri});
+  };
 
   static navigationOptions = {
     title: 'Register',
